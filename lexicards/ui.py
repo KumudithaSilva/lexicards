@@ -66,7 +66,8 @@ class LexiUI:
 
         # Button configuration
         self._unknown_button = Button(
-            image=self._images["wrong_image"], highlightthickness=0
+            image=self._images["wrong_image"], highlightthickness=0,
+            relief="flat", bg=self.BACKGROUND_COLOR
         )
         self._unknown_button.grid(
             row=1,
@@ -74,7 +75,8 @@ class LexiUI:
         )
 
         self._known_button = Button(
-            image=self._images["right_image"], highlightthickness=0
+            image=self._images["right_image"], highlightthickness=0,
+            relief="flat", bg=self.BACKGROUND_COLOR
         )
         self._known_button.grid(row=1, column=1)
 
