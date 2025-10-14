@@ -1,5 +1,6 @@
 from tkinter import Tk
 
+from lexicards.lexicard_controller import LexicalController
 from lexicards.resources import ResourceLoader
 from lexicards.ui import LexiUI
 
@@ -15,6 +16,7 @@ def main():
     }
 
     ui = LexiUI(root, images)
+    LexicalController(ui)
     root.mainloop()
 
 
