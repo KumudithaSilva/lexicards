@@ -34,6 +34,7 @@ class LexicalController:
         self.ui.set_unknown_callback(self.generate_random_new_word)
 
         self.ui.set_title("Japanese")
+        self.ui.set_word("")
 
 
     def load_data(self):
