@@ -59,15 +59,21 @@ class LexiUI:
         self._canvas = Canvas(self._root, width=800, height=526, highlightthickness=0)
         self._canvas.config(background=self.BACKGROUND_COLOR)
         self._canvas.create_image(400, 263, image=self._images["card_front_image"])
-        self._title_text_id = self._canvas.create_text(400, 150, text="Title", font=self.LABEL_TOP_FONT)
-        self._word_text_id = self._canvas.create_text(400, 263, text="word", font=self.LABEL_BOTTOM_FONT)
+        self._title_text_id = self._canvas.create_text(
+            400, 150, text="Title", font=self.LABEL_TOP_FONT
+        )
+        self._word_text_id = self._canvas.create_text(
+            400, 263, text="word", font=self.LABEL_BOTTOM_FONT
+        )
 
         self._canvas.grid(row=0, column=0, columnspan=2)
 
         # Button configuration
         self._unknown_button = Button(
-            image=self._images["wrong_image"], highlightthickness=0,
-            relief="flat", bg=self.BACKGROUND_COLOR
+            image=self._images["wrong_image"],
+            highlightthickness=0,
+            relief="flat",
+            bg=self.BACKGROUND_COLOR,
         )
         self._unknown_button.grid(
             row=1,
@@ -75,8 +81,10 @@ class LexiUI:
         )
 
         self._known_button = Button(
-            image=self._images["right_image"], highlightthickness=0,
-            relief="flat", bg=self.BACKGROUND_COLOR
+            image=self._images["right_image"],
+            highlightthickness=0,
+            relief="flat",
+            bg=self.BACKGROUND_COLOR,
         )
         self._known_button.grid(row=1, column=1)
 
@@ -101,7 +109,6 @@ class LexiUI:
     def set_word(self, title: str):
         """Sets the text of the word label."""
         self._canvas.itemconfig(self._word_text_id, text=title)
-
 
     # -----------------------------
     # Public method to set the known button callback dynamically
