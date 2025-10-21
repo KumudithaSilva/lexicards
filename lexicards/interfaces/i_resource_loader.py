@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IResourceLoader(ABC):
     """Interface for resource loading mechanisms."""
 

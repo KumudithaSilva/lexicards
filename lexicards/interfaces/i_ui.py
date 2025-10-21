@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IUI(ABC):
     """Interface for LexiCards User Interfaces."""
 

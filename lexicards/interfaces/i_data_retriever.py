@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+
 class IDataRetriever(ABC):
     """Interface for any data retriever (CSV, DB, API)."""
 
