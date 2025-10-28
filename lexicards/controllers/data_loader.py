@@ -32,7 +32,7 @@ class ResourceLoader(IResourceLoader, metaclass=SingletonMeta):
                     base_path = os.path.join(sys._MEIPASS, "assets", "images")
                 else:
                     base_path = os.path.join(
-                        os.path.dirname(__file__), "assets", "images"
+                        os.path.dirname(__file__), "..", "assets", "images"
                     )
             self.base_path = os.path.abspath(base_path)
             self._initialized = True
