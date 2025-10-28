@@ -1,4 +1,7 @@
-class SingletonMeta(type):
+from abc import ABCMeta
+
+
+class SingletonMeta(ABCMeta):
     """
     Metaclass for creating Singleton classes.
 
