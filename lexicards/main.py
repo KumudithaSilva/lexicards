@@ -2,7 +2,7 @@ from tkinter import Tk
 
 from lexicards.controllers.data_loader import ResourceLoader
 from lexicards.controllers.data_retriever import CSVDataRetrieverFactory
-from lexicards.controllers.lexi_ui import LexiUi
+from lexicards.ui.lexi_ui_test import LexiUi
 from lexicards.controllers.lexical_controller import LexicalController
 
 
