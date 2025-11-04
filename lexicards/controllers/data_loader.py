@@ -4,7 +4,7 @@ import sys
 from PIL.ImageTk import PhotoImage
 
 from lexicards.core.singleton_meta import SingletonMeta
-from lexicards.interfaces.i_resource_loader import IResourceLoader
+from lexicards.interfaces.data.i_resource_loader import IResourceLoader
 
 
 class ResourceLoader(IResourceLoader, metaclass=SingletonMeta):
