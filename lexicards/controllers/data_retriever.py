@@ -3,8 +3,8 @@ import os
 from abc import ABC, abstractmethod
 from typing import List
 
-from lexicards.errors.error import DataFileNotFoundError, DataCorruptionError
-from lexicards.interfaces.i_data_retriever import IDataRetriever
+from lexicards.errors.error import DataCorruptionError, DataFileNotFoundError
+from lexicards.interfaces.data.i_data_retriever import IDataRetriever
 
 
 # --------------------------
