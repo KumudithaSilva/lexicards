@@ -3,10 +3,14 @@ from tkinter import Tk
 
 from lexicards.controllers.data_loader import ResourceLoader
 from lexicards.controllers.data_retriever import CSVDataRetrieverFactory
-from lexicards.ui.builders.desktop_builder import DesktopLexiUiBuilder
 from lexicards.controllers.lexical_controller import LexicalController
-from lexicards.ui.builders.mac_builder import MacLexiUiBuilder
-from lexicards.ui.director.ui_director import LexiUiDirector
+from lexicards.ui.builders.desktop_ui_builder import DesktopLexiUiBuilder
+from lexicards.ui.builders.mac_ui_builder import MacLexiUiBuilder
+from lexicards.ui.director.ui_desktop_director import DesktopUiDirector
+from lexicards.ui.director.ui_mac_director import MacUiDirector
+from lexicards.ui.manager.ui_manager import UiManager
+from lexicards.ui.orchestrator.ui_mac_orchestrator import MacUiOrchestrator
+from lexicards.ui.orchestrator.ui_orchestrator import UiOrchestrator
 
 
 def main():
@@ -21,16 +25,39 @@ def main():
         "audio_image": loader.load_image("audio.png"),
     }
 
+    # -----------------------------
+    # Platform-specific UI setup
+    # -----------------------------
     if current_os == "Darwin":
         builder = MacLexiUiBuilder(root, images)
+        director = MacUiDirector(builder)
+        orchestrator_class = MacUiOrchestrator
     else:
         builder = DesktopLexiUiBuilder(root, images)
+        director = DesktopUiDirector(builder)
+        orchestrator_class = UiOrchestrator
 
-    director = LexiUiDirector(builder)
-    ui = director.build_ui()
-    retriever = CSVDataRetrieverFactory("data/japanese_words.csv").create_data_retriever()
-    LexicalController(ui, retriever)
+    # -----------------------------
+    # Construct and initialize UI
+    # -----------------------------
+    ui = director.construct_ui()
+    ui_manager = UiManager(ui)
 
+    # -----------------------------
+    # Controller & Wiring
+    # -----------------------------
+    retriever = CSVDataRetrieverFactory(
+        "data/japanese_words.csv"
+    ).create_data_retriever()
+    controller = LexicalController(ui, retriever)
+
+    orchestrator = orchestrator_class(ui)
+    orchestrator.wire_callbacks(controller)
+
+    # -----------------------------
+    # Start app
+    # -----------------------------
+    ui_manager.initialize_ui()
     root.mainloop()
 
 
