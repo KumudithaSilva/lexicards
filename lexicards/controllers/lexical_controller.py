@@ -1,7 +1,8 @@
 import random
+
 from lexicards.controllers.data_retriever import IDataRetriever
-from lexicards.interfaces.i_controller import IController
-from lexicards.interfaces.i_ui import IUI
+from lexicards.interfaces.controller.i_controller import IController
+from lexicards.interfaces.ui.i_ui_base import IUiBase
 
 
 class LexicalController(IController):
@@ -13,7 +14,7 @@ class LexicalController(IController):
         csv_data (DataRetriever): Loaded CSV file data.
     """
 
-    def __init__(self, ui: IUI, csv_data: IDataRetriever):
+    def __init__(self, ui: IUiBase, csv_data: IDataRetriever):
         """
         Initialize the LexicalController.
 
@@ -23,14 +24,6 @@ class LexicalController(IController):
         """
         self.ui = ui
         self.csv_data = csv_data
-
-        # Wire the buttons to controller methods
-        self.ui.set_known_callback(self.generate_random_new_word)
-        self.ui.set_unknown_callback(self.generate_random_unknown_word)
-
-        # Initialize UI
-        self.ui.set_title("Japanese")
-        self.ui.set_word("")
 
     def generate_random_new_word(self):
         """
@@ -54,26 +47,5 @@ class LexicalController(IController):
             self.ui.set_word("No data loaded.")
             return
 
-        random_word = self.pick_random_word(words)
+        random_word = random.choice(words)[0]
         self.ui.set_word(random_word)
-
-    # --------------------------
-    # Static Helper Methods
-    # --------------------------
-
-    @staticmethod
-    def pick_random_word(word_list):
-        """
-        Pick a random word from a given list.
-
-        Args:
-            word_list (list): List of words.
-
-        Returns:
-            str: Random word from the list.
-        """
-        if not word_list:
-            return None, None
-        index = random.randint(0, len(word_list) - 1)
-        random_word = word_list[index][0]
-        return random_word
