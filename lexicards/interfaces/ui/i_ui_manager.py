@@ -5,7 +5,7 @@ class IUiManager(ABC):
     """Interface for managing UI updates and managing initialization."""
 
     @abstractmethod
-    def initialize_ui(self):
+    def initialize_ui(self, foreign_language: str, native_language: str):
         """Set the initial UI state."""
         pass
 
