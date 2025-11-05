@@ -57,7 +57,6 @@ def main():
     # -----------------------------
     # Start app
     # -----------------------------
-    ui_manager.initialize_ui()
     root.mainloop()
 
 
