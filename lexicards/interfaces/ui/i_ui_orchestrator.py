@@ -6,5 +6,10 @@ class IUiOrchestrator(ABC):
 
     @abstractmethod
     def wire_callbacks(self, controller):
+        """Connect UI events' buttons with controller logic."""
+        pass
+
+    @abstractmethod
+    def schedule_auto_meaning(self, controller):
         """Connect UI events with controller logic."""
         pass
