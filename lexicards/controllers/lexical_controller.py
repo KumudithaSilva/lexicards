@@ -1,5 +1,4 @@
 import random
-
 from lexicards.controllers.data_retriever import IDataRetriever
 from lexicards.interfaces.controller.i_controller import IController
 from lexicards.interfaces.ui.i_ui_manager import IUiManager
@@ -12,6 +11,10 @@ class LexicalController(IController):
     Attributes:
         ui (IUiManager): The UI manager instance to interact with.
         csv_data (IDataRetriever): Loaded CSV file data.
+        words (list): List of word pairs loaded from CSV.
+        current_index (int): Index of the current random word.
+        foreign_language (str): Foreign language label.
+        native_language (str): Native language label.
     """
 
     def __init__(self, ui: IUiManager, csv_data: IDataRetriever):
@@ -24,8 +27,12 @@ class LexicalController(IController):
         """
         self.ui = ui
         self.csv_data = csv_data
+
         self.words = None
         self.current_index = None
+        self.foreign_language = None
+        self.native_language = None
+
         self._load_words_if_needed()
 
     def generate_random_new_word(self):
@@ -41,40 +48,49 @@ class LexicalController(IController):
         self._generate_random_word()
 
     def generate_word_meaning(self):
-        """Generate the random word's meaning."""
+        """
+        Display the meaning of the currently displayed random word.
+        """
         self._meaning_of_random_word()
-
 
     def _load_words_if_needed(self):
         """
-        Load words from CSV only once and cache them.
+        Load words from CSV only once and initialize the UI.
         """
         if self.words is None:
             self.words = self.csv_data.load_data()
+
+            if not self.words or len(self.words[0]) < 2:
+                raise ValueError("CSV data must contain at least one row with two columns.")
+
+            self.foreign_language = self.words[0][0]
+            self.native_language = self.words[0][1]
+
+            self.ui.initialize_ui(self.foreign_language, self.native_language)
 
     def _generate_random_word(self):
         """
         Generate and display a random word from the loaded CSV data.
         """
-        words = self.words
+        words_list = self.words
 
-        if not words:
+        if not words_list:
             self.ui.update_word_display("No data loaded.")
             return
 
-        self.current_index = random.randrange(len(words))
+        self.current_index = random.randrange(len(words_list))
+        random_word = words_list[self.current_index][0]
 
-        random_word = words[self.current_index][0]
-        self.ui.update_title("Japanese")
+        self.ui.update_title(self.foreign_language)
         self.ui.update_word_display(random_word)
 
     def _meaning_of_random_word(self):
         """
-        Fetch and display meaning of the currently selected word.
+        Fetch and display the meaning of the currently selected word.
         """
-        words = self.words
+        words_list = self.words
 
-        if not words:
+        if not words_list:
             self.ui.update_word_display("No data loaded.")
             return
 
@@ -82,6 +98,7 @@ class LexicalController(IController):
             self.ui.update_word_display('')
             return
 
-        meaning = words[self.current_index][1]
-        self.ui.update_title("English")
+        meaning = words_list[self.current_index][1]
+
+        self.ui.update_title(self.native_language)
         self.ui.update_word_display(meaning)
