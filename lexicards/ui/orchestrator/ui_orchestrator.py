@@ -15,8 +15,9 @@ class UiOrchestrator(IUiOrchestrator):
 
     def schedule_auto_meaning(self, controller):
         """Automatically refresh meaning every few seconds."""
+
         def update_meaning():
             controller.generate_word_meaning()
             self.ui.get_root().after(5000, update_meaning)
-        self.ui.get_root().after(5000, update_meaning)
 
+        self.ui.get_root().after(5000, update_meaning)
