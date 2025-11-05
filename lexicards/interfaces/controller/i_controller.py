@@ -13,3 +13,8 @@ class IController(ABC):
     def generate_random_unknown_word(self):
         """Handle logic when a user clicks the 'Unknown' button."""
         pass
+
+    @abstractmethod
+    def generate_word_meaning(self):
+        """Handle logic of generating meaning of random word"""
+        pass
