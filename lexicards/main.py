@@ -49,7 +49,7 @@ def main():
     retriever = CSVDataRetrieverFactory(
         "data/japanese_words.csv"
     ).create_data_retriever()
-    controller = LexicalController(ui, retriever)
+    controller = LexicalController(ui_manager, retriever)
 
     orchestrator = orchestrator_class(ui)
     orchestrator.wire_callbacks(controller)
