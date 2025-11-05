@@ -13,6 +13,13 @@ class MacLexiUI(DesktopLexiUI, IUiMac):
         self._audio_callback = None
 
     # -----------------------------
+    # Root & title Overrides
+    # -----------------------------
+    def build_window(self):
+        root = super().build_window()
+        root.title("LexiCards Mac") # changed the Mac title
+
+    # -----------------------------
     # Canvas & Layout Overrides
     # -----------------------------
     def build_canvas(self, card_front_image):
