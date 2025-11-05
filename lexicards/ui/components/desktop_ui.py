@@ -55,7 +55,7 @@ class DesktopLexiUI(IUiBase):
             image=wrong_image,
             highlightthickness=0,
             relief="flat",
-            bg=self.BACKGROUND_COLOR
+            bg=self.BACKGROUND_COLOR,
         )
         self._unknown_button.grid(row=1, column=0)
 
