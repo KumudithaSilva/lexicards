@@ -17,7 +17,7 @@ class MacLexiUI(DesktopLexiUI, IUiMac):
     # -----------------------------
     def build_window(self):
         root = super().build_window()
-        root.title("LexiCards Mac") # changed the Mac title
+        root.title("LexiCards Mac")  # changed the Mac title
 
     # -----------------------------
     # Canvas & Layout Overrides
