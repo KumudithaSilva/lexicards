@@ -8,10 +8,10 @@ class UiManager(IUiManager, metaclass=SingletonMeta):
     def __init__(self, ui):
         self._ui = ui
 
-    def initialize_ui(self):
+    def initialize_ui(self, foreign_language: str, native_language: str):
         """Set up the initial UI view."""
-        self._ui.set_title("Japanese")
-        self._ui.set_word("こんにちは")
+        self._ui.set_title(foreign_language)
+        self._ui.set_word(native_language)
 
     def update_word_display(self, word: str):
         """Update the displayed word."""
