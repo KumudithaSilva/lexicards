@@ -15,11 +15,21 @@ class UiManager(IUiManager, metaclass=SingletonMeta):
 
     def update_word_display(self, word: str):
         """Update the displayed word."""
+        self.rest_word_display()
         self._ui.set_word(word)
 
     def update_title(self, title: str):
         """Change the title text."""
+        self.rest_title()
         self._ui.set_title(title)
+
+    def rest_word_display(self):
+        """Reset the displayed word."""
+        self._ui.set_word("")
+
+    def rest_title(self):
+        """Reset the title."""
+        self._ui.set_title("")
 
     def reset(self):
         """Reset the UI state. Useful in tests or reinitialization."""
