@@ -20,6 +20,16 @@ class IUiManager(ABC):
         pass
 
     @abstractmethod
+    def rest_title(self):
+        """Reset the UI title text."""
+        pass
+
+    @abstractmethod
+    def rest_word_display(self):
+        """Reset the UI word text."""
+        pass
+
+    @abstractmethod
     def reset(self):
         """Reset the UI state."""
         pass
