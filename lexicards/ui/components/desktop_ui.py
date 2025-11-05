@@ -23,6 +23,7 @@ class DesktopLexiUI(IUiBase):
         self._root.title("LexiCards Windows")
         self._root.config(padx=50, pady=50, bg=self.BACKGROUND_COLOR)
         self._root.resizable(False, False)
+        return self._root
 
     def build_canvas(self, card_front_image):
         """Create and grid the canvas."""
@@ -36,7 +37,7 @@ class DesktopLexiUI(IUiBase):
     def create_title_label(self):
         """Create a label for the language title."""
         self._title_label = Label(
-            self._root, text="Japanese", font=self.LABEL_TOP_FONT, bg="white"
+            self._root, text="", font=self.LABEL_TOP_FONT, bg="white"
         )
         self._title_label.place(x=400, y=150, anchor="center")
 
@@ -54,7 +55,7 @@ class DesktopLexiUI(IUiBase):
             image=wrong_image,
             highlightthickness=0,
             relief="flat",
-            bg=self.BACKGROUND_COLOR,
+            bg=self.BACKGROUND_COLOR
         )
         self._unknown_button.grid(row=1, column=0)
 
@@ -85,3 +86,6 @@ class DesktopLexiUI(IUiBase):
 
     def get_word_text(self) -> str:
         return self._word_label
+
+    def get_root(self):
+        return self._root
