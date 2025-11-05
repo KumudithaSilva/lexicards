@@ -1,4 +1,5 @@
 import random
+
 from lexicards.controllers.data_retriever import IDataRetriever
 from lexicards.interfaces.controller.i_controller import IController
 from lexicards.interfaces.ui.i_ui_manager import IUiManager
@@ -61,7 +62,9 @@ class LexicalController(IController):
             self.words = self.csv_data.load_data()
 
             if not self.words or len(self.words[0]) < 2:
-                raise ValueError("CSV data must contain at least one row with two columns.")
+                raise ValueError(
+                    "CSV data must contain at least one row with two columns."
+                )
 
             self.foreign_language = self.words[0][0]
             self.native_language = self.words[0][1]
