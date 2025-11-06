@@ -25,16 +25,17 @@ class MacLexiUI(DesktopLexiUI, IUiMac):
     def build_canvas(self, card_front_image):
         """Override to adjust grid layout for Mac."""
         canvas = super().build_canvas(card_front_image)
-        canvas.grid(row=0, column=0, columnspan=3)  # changed for Mac layout
+        canvas.grid(row=0, column=0, columnspan=4)  # changed for Mac layout
 
     # -----------------------------
     # Buttons Overrides
     # -----------------------------
-    def build_buttons(self, wrong_image, right_image):
+    def build_buttons(self, wrong_image, right_image, next_button):
         """Create Known and Unknown buttons."""
-        unknown_button, known_button = super().build_buttons(wrong_image, right_image)
-        unknown_button.grid(row=1, column=0)
+        unknown_button, known_button, next_button = super().build_buttons(wrong_image, right_image, next_button)
+        unknown_button.grid(row=1, column=1)
         known_button.grid(row=1, column=2)
+        next_button.grid(row=1, column=3)
 
     # -----------------------------
     # Mac-only Features
@@ -48,7 +49,7 @@ class MacLexiUI(DesktopLexiUI, IUiMac):
             bg=self.BACKGROUND_COLOR,
             command=self._audio_callback,
         )
-        self._audio_button.grid(row=1, column=1)
+        self._audio_button.grid(row=1, column=0, pady=(10, 0))
 
     def set_audio_callback(self, callback):
         """Expose method to attach an audio playback callback."""
