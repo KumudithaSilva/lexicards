@@ -23,6 +23,10 @@ class UiManager(IUiManager, metaclass=SingletonMeta):
         self.rest_title()
         self._ui.set_title(title)
 
+    def run_after(self, delay_ms: int, callback):
+        """Schedule a callback to run after a delay."""
+        self._ui.get_root().after(delay_ms, callback)
+
     def rest_word_display(self):
         """Reset the displayed word."""
         self._ui.set_word("")
