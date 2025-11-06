@@ -20,6 +20,11 @@ class IUiManager(ABC):
         pass
 
     @abstractmethod
+    def run_after(self, delay_ms: int, callback):
+        """Schedule a callback to run after a specified delay."""
+        pass
+
+    @abstractmethod
     def rest_title(self):
         """Reset the UI title text."""
         pass
