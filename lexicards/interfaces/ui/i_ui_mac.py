@@ -24,6 +24,9 @@ class IUiMac(IUiBase):
     def set_unknown_callback(self, callback):
         pass
 
+    def set_next_callback(self, callback):
+        pass
+
     @abstractmethod
     def set_audio_callback(self, callback):
         pass
