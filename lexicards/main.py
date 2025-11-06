@@ -24,7 +24,6 @@ def main():
         "right_image": loader.load_image("right.png"),
         "audio_image": loader.load_image("audio.png"),
         "next_image": loader.load_image("next.png"),
-
     }
 
     # -----------------------------
