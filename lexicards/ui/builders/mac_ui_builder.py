@@ -29,8 +29,11 @@ class MacLexiUiBuilder(IUiBuilderMac):
         self._ui.build_audio_button(self._images["audio_image"])
 
     def build_buttons(self):
-        self._ui.build_buttons(self._images["wrong_image"], self._images["right_image"],
-                               self._images["next_image"])
+        self._ui.build_buttons(
+            self._images["wrong_image"],
+            self._images["right_image"],
+            self._images["next_image"],
+        )
 
     def get_ui(self):
         return self._ui
