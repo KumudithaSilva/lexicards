@@ -1,5 +1,4 @@
 import random
-
 from lexicards.controllers.data_retriever import IDataRetriever
 from lexicards.interfaces.controller.i_controller import IController
 from lexicards.interfaces.ui.i_ui_manager import IUiManager
@@ -7,7 +6,7 @@ from lexicards.interfaces.ui.i_ui_manager import IUiManager
 
 class LexicalController(IController):
     """
-    Controller class that connects the UI and random word generator.
+    Controller that connects the UI and random word generator.
 
     Attributes:
         ui (IUiManager): The UI manager instance to interact with.
@@ -36,15 +35,39 @@ class LexicalController(IController):
 
         self._load_words_if_needed()
 
-    def generate_random_new_word(self):
-        """
-        Handle the 'Known' button click by generating a new random word.
-        """
+    # ----------------------------------------------------------------------
+    # Public Button Handlers
+    # ----------------------------------------------------------------------
+
+    def start_first_word(self):
+        """Generate the initial random word when the app starts."""
         self._generate_random_word()
 
-    def generate_random_unknown_word(self):
+    def handle_known_word(self):
         """
-        Handle the 'Unknown' button click by generating a new random word.
+        Handle the 'Known' button click.
+
+        Displays the meaning of the current word for 3 seconds,
+        then automatically generates a new random word.
+        """
+        self._meaning_of_random_word()
+        self.ui.run_after(2000, self._generate_random_word)
+
+    def handle_unknown_word(self):
+        """
+        Handle the 'Unknown' button click.
+
+        Displays the meaning of the unknown word for 3 seconds,
+        then automatically generates a new random word.
+        """
+        self._meaning_of_random_word()
+        self.ui.run_after(2000, self._generate_random_word)
+
+    def handle_next_word(self):
+        """
+        Handle the 'Next' button click.
+
+        Generates and displays a new random word.
         """
         self._generate_random_word()
 
@@ -54,17 +77,19 @@ class LexicalController(IController):
         """
         self._meaning_of_random_word()
 
+    # ----------------------------------------------------------------------
+    # Private Utility Methods
+    # ----------------------------------------------------------------------
+
     def _load_words_if_needed(self):
         """
-        Load words from CSV only once and initialize the UI.
+        Load words from CSV once and initialize the UI with language labels.
         """
         if self.words is None:
             self.words = self.csv_data.load_data()
 
             if not self.words or len(self.words[0]) < 2:
-                raise ValueError(
-                    "CSV data must contain at least one row with two columns."
-                )
+                raise ValueError("CSV data must contain at least two columns per row.")
 
             self.foreign_language = self.words[0][0]
             self.native_language = self.words[0][1]
@@ -75,14 +100,12 @@ class LexicalController(IController):
         """
         Generate and display a random word from the loaded CSV data.
         """
-        words_list = self.words
-
-        if not words_list:
+        if not self.words:
             self.ui.update_word_display("No data loaded.")
             return
 
-        self.current_index = random.randrange(len(words_list))
-        random_word = words_list[self.current_index][0]
+        self.current_index = random.randrange(len(self.words))
+        random_word = self.words[self.current_index][0]
 
         self.ui.update_title(self.foreign_language)
         self.ui.update_word_display(random_word)
@@ -91,9 +114,7 @@ class LexicalController(IController):
         """
         Fetch and display the meaning of the currently selected word.
         """
-        words_list = self.words
-
-        if not words_list:
+        if not self.words:
             self.ui.update_word_display("No data loaded.")
             return
 
@@ -101,7 +122,6 @@ class LexicalController(IController):
             self.ui.update_word_display('')
             return
 
-        meaning = words_list[self.current_index][1]
-
+        meaning = self.words[self.current_index][1]
         self.ui.update_title(self.native_language)
         self.ui.update_word_display(meaning)
