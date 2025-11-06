@@ -76,8 +76,7 @@ class DesktopLexiUI(IUiBase):
         )
         self._next_button.grid(row=1, column=2, pady=(10, 0))
 
-        return (self._unknown_button,
-                self._known_button, self._next_button)
+        return self._unknown_button, self._known_button, self._next_button
 
     # -- Interface Methods --
     def set_title(self, title: str):
