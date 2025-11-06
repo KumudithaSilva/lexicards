@@ -32,7 +32,9 @@ class MacLexiUI(DesktopLexiUI, IUiMac):
     # -----------------------------
     def build_buttons(self, wrong_image, right_image, next_button):
         """Create Known and Unknown buttons."""
-        unknown_button, known_button, next_button = super().build_buttons(wrong_image, right_image, next_button)
+        unknown_button, known_button, next_button = super().build_buttons(
+            wrong_image, right_image, next_button
+        )
         unknown_button.grid(row=1, column=1)
         known_button.grid(row=1, column=2)
         next_button.grid(row=1, column=3)
