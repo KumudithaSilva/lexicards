@@ -33,3 +33,8 @@ class IUiBase(ABC):
     def set_unknown_callback(self, callback):
         """Sets the callback for 'unknown' button."""
         pass
+
+    @abstractmethod
+    def set_next_callback(self, callback):
+        """Sets the callback for 'next' button."""
+        pass
