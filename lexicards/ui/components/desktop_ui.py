@@ -17,6 +17,7 @@ class DesktopLexiUI(IUiBase):
         self._word_label = None
         self._known_button = None
         self._unknown_button = None
+        self._next_button = None
 
     def build_window(self):
         """Configure main window."""
@@ -30,7 +31,7 @@ class DesktopLexiUI(IUiBase):
         canvas = Canvas(self._root, width=800, height=526, highlightthickness=0)
         canvas.config(background=self.BACKGROUND_COLOR)
         canvas.create_image(400, 263, image=card_front_image)
-        canvas.grid(row=0, column=0, columnspan=2)
+        canvas.grid(row=0, column=0, columnspan=3)
         self._canvas = canvas
         return canvas
 
@@ -48,7 +49,7 @@ class DesktopLexiUI(IUiBase):
         )
         self._word_label.place(x=400, y=263, anchor="center")
 
-    def build_buttons(self, wrong_image, right_image):
+    def build_buttons(self, wrong_image, right_image, next_image):
         """Create Known and Unknown buttons."""
 
         self._unknown_button = Button(
@@ -57,7 +58,7 @@ class DesktopLexiUI(IUiBase):
             relief="flat",
             bg=self.BACKGROUND_COLOR,
         )
-        self._unknown_button.grid(row=1, column=0)
+        self._unknown_button.grid(row=1, column=0, pady=(10, 0))
 
         self._known_button = Button(
             image=right_image,
@@ -65,8 +66,18 @@ class DesktopLexiUI(IUiBase):
             relief="flat",
             bg=self.BACKGROUND_COLOR,
         )
-        self._known_button.grid(row=1, column=1)
-        return self._unknown_button, self._known_button
+        self._known_button.grid(row=1, column=1, pady=(10, 0))
+
+        self._next_button = Button(
+            image=next_image,
+            highlightthickness=0,
+            relief="flat",
+            bg=self.BACKGROUND_COLOR,
+        )
+        self._next_button.grid(row=1, column=2, pady=(10, 0))
+
+        return (self._unknown_button,
+                self._known_button, self._next_button)
 
     # -- Interface Methods --
     def set_title(self, title: str):
@@ -80,6 +91,9 @@ class DesktopLexiUI(IUiBase):
 
     def set_unknown_callback(self, callback):
         self._unknown_button.config(command=callback)
+
+    def set_next_callback(self, callback):
+        self._next_button.config(command=callback)
 
     def get_title_text(self) -> str:
         return self._title_label
