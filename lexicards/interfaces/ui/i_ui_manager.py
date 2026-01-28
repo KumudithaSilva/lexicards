@@ -25,6 +25,16 @@ class IUiManager(ABC):
         pass
 
     @abstractmethod
+    def update_canvas(self):
+        """Update the canvas image and color"""
+        pass
+
+    @abstractmethod
+    def reset_canvas(self):
+        """Reset the canvas image and color"""
+        pass
+
+    @abstractmethod
     def rest_title(self):
         """Reset the UI title text."""
         pass
