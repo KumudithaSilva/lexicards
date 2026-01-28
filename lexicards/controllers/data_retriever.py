@@ -1,0 +1,98 @@
+import csv
+import os
+from abc import ABC, abstractmethod
+from typing import List
+
+from lexicards.errors.error import DataCorruptionError, DataFileNotFoundError
+from lexicards.interfaces.data.i_data_retriever import IDataRetriever
+
+
+# --------------------------
+# Concrete Data Retrievers
+# --------------------------
+class CSVDataRetriever(IDataRetriever):
+    """
+    Concrete implementation of IDataRetriever for CSV files.
+
+    Attributes:
+        filename (str): Path to the CSV file to load data from.
+    """
+
+    def __init__(self, filename: str = "data/japanese_words.csv"):
+        """
+        Initialize the CSVDataRetriever with a filename.
+
+        Args:
+            filename (str): Path to the CSV file. Defaults to 'data/japanese_words.csv'.
+        """
+        self.filename = filename
+
+    def load_data(self) -> List[List[str]]:
+        """
+        Load data from the CSV file.
+
+        Returns:
+            List[List[str]]: List of word entries from the CSV.
+
+        Raises:
+            DataFileNotFoundError: If the CSV file does not exist.
+            DataCorruptionError: If the CSV file cannot be read or is corrupted.
+        """
+        if not os.path.isfile(self.filename):
+            raise DataFileNotFoundError(f"File not found: {self.filename}")
+
+        try:
+            with open(self.filename, "r", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                return list(reader)
+        except csv.Error:
+            raise DataCorruptionError(f"CSV corrupted in {self.filename}")
+
+
+# --------------------------
+# Factory Interface
+# --------------------------
+class DataRetrieverFactory(ABC):
+    """
+    Abstract Factory interface for creating IDataRetriever instances.
+    """
+
+    @abstractmethod
+    def create_data_retriever(self) -> IDataRetriever:
+        """
+        Create and return an IDataRetriever instance.
+
+        Returns:
+            IDataRetriever: Concrete implementation of data retriever.
+        """
+        pass
+
+
+# --------------------------
+# Concrete Factory
+# --------------------------
+class CSVDataRetrieverFactory(DataRetrieverFactory):
+    """
+    Factory for creating CSVDataRetriever instances.
+
+    Attributes:
+        filename (str): Path to the CSV file.
+    """
+
+    def __init__(self, filename: str = "data/japanese_words.csv"):
+        """
+        Initialize the factory with a filename.
+
+        Args:
+            filename (str): Path to the CSV file to create retrievers for.
+        """
+        self.filename = filename
+
+    def create_data_retriever(self) -> IDataRetriever:
+        """
+        Create and return a CSVDataRetriever instance using the configured filename.
+
+        Returns:
+            CSVDataRetriever: New instance of CSVDataRetriever.
+        """
+        return CSVDataRetriever(self.filename)

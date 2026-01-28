@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "LexiCards"
+version = "0.1.0-alpha"
+description = "LexiCards — Flash Card App"
+authors = [
+  { name="Kumuditha Silva", email="kumudithasilva66@gmail.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pytest>=7.4.0"
+]
+
+[project.scripts]
+taskon = "lexicards.main:main"
+
+[tool.black]
+line-length = 88
+skip-string-normalization = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lexicards*"]
+
+[tool.setuptools.package-data]
+"lexicards.assets.images" = ["*.png", "*.ico"]
+
+
+
+
+
