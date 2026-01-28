@@ -18,6 +18,7 @@ class DesktopLexiUI(IUiBase):
         self._known_button = None
         self._unknown_button = None
         self._next_button = None
+        self._canvas_image = None
 
     def build_window(self):
         """Configure main window."""
@@ -30,24 +31,26 @@ class DesktopLexiUI(IUiBase):
         """Create and grid the canvas."""
         canvas = Canvas(self._root, width=800, height=526, highlightthickness=0)
         canvas.config(background=self.BACKGROUND_COLOR)
-        canvas.create_image(400, 263, image=card_front_image)
+        self._canvas_image = canvas.create_image(400, 263, image=card_front_image)
         canvas.grid(row=0, column=0, columnspan=3)
         self._canvas = canvas
         return canvas
 
     def create_title_label(self):
-        """Create a label for the language title."""
-        self._title_label = Label(
-            self._root, text="", font=self.LABEL_TOP_FONT, bg="white"
+        """Create a title text on the canvas."""
+        self._title_label = self._canvas.create_text(
+            400, 150,
+            text="",
+            font=self.LABEL_TOP_FONT,
+            fill="black"
         )
-        self._title_label.place(x=400, y=150, anchor="center")
 
     def create_word_label(self):
-        """Create the main word display label."""
-        self._word_label = Label(
-            self._root, text="", font=self.LABEL_TOP_FONT, bg="white"
+        """Create a word text on the canvas."""
+        self._word_label = self._canvas.create_text(
+            400, 263, text="", font=self.LABEL_TOP_FONT,
+            fill="black"
         )
-        self._word_label.place(x=400, y=263, anchor="center")
 
     def build_buttons(self, wrong_image, right_image, next_image):
         """Create Known and Unknown buttons."""
@@ -80,10 +83,10 @@ class DesktopLexiUI(IUiBase):
 
     # -- Interface Methods --
     def set_title(self, title: str):
-        self._title_label.config(text=title)
+        self._canvas.itemconfig(self._title_label, text=title)
 
     def set_word(self, word: str):
-        self._word_label.config(text=word)
+        self._canvas.itemconfig(self._word_label, text=word)
 
     def set_known_callback(self, callback):
         self._known_button.config(command=callback)
@@ -94,11 +97,18 @@ class DesktopLexiUI(IUiBase):
     def set_next_callback(self, callback):
         self._next_button.config(command=callback)
 
+    def set_canvas_image(self, image):
+        self._canvas.itemconfig(self._canvas_image, image=image)
+
+    def set_canvas_color(self, color: str):
+        self._canvas.itemconfig(self._title_label, fill=color)
+        self._canvas.itemconfig(self._word_label, fill=color)
+
     def get_title_text(self) -> str:
-        return self._title_label
+        return self._canvas.itemcget(self._title_label, "text")
 
     def get_word_text(self) -> str:
-        return self._word_label
+        return self._canvas.itemcget(self._word_label, "text")
 
     def get_root(self):
         return self._root
