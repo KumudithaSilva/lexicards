@@ -108,6 +108,7 @@ class LexicalController(IController):
         self.current_index = random.randrange(len(self.words))
         random_word = self.words[self.current_index][0]
 
+        self.ui.update_canvas()
         self.ui.update_title(self.foreign_language)
         self.ui.update_word_display(random_word)
 
@@ -123,6 +124,7 @@ class LexicalController(IController):
             self.ui.update_word_display('')
             return
 
+        self.ui.reset_canvas()
         meaning = self.words[self.current_index][1]
         self.ui.update_title(self.native_language)
         self.ui.update_word_display(meaning)

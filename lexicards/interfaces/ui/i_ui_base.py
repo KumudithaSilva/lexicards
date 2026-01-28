@@ -15,6 +15,16 @@ class IUiBase(ABC):
         pass
 
     @abstractmethod
+    def set_canvas_image(self, image):
+        """Change the canvas image."""
+        pass
+
+    @abstractmethod
+    def set_canvas_color(self, color: str):
+        """Change canvas background color."""
+        pass
+
+    @abstractmethod
     def get_title_text(self) -> str:
         """Returns the current title text."""
         pass
