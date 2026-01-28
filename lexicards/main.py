@@ -20,6 +20,7 @@ def main():
 
     images = {
         "card_front_image": loader.load_image("card_front.png"),
+        "card_back_image": loader.load_image("card_back.png"),
         "wrong_image": loader.load_image("wrong.png"),
         "right_image": loader.load_image("right.png"),
         "audio_image": loader.load_image("audio.png"),
@@ -42,7 +43,7 @@ def main():
     # Construct and initialize UI
     # -----------------------------
     ui = director.construct_ui()
-    ui_manager = UiManager(ui)
+    ui_manager = UiManager(ui, images)
 
     # -----------------------------
     # Controller & Wiring
