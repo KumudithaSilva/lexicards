@@ -8,139 +8,65 @@ on:
     branches:
       - '**'
 
-
 jobs:
-  # ----------------------------
-  # Job 1: Flake8 Linting
-  # ----------------------------
   flake8:
     name: Lint with flake8
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - run: pip install flake8
+      - run: flake8 .
 
-      - name: Install flake8
-        run: pip install flake8
-
-      - name: Run flake8
-        run: flake8 .
-
-  # ----------------------------
-  # Job 2: Black Formatting Check
-  # ----------------------------
   black:
     name: Check code formatting with black
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - run: pip install black
+      - run: black .
 
-      - name: Install black
-        run: pip install black
-
-      - name: Run black check
-        run: black .
-
-  # ----------------------------
-  # Job 3: Isort Import Order Check
-  # ----------------------------
   isort:
     name: Check import order with isort
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - run: pip install isort
+      - run: isort .
 
-      - name: Install isort
-        run: pip install isort
-
-      - name: Run isort check
-        run: isort .
-
-  # ----------------------------
-  # Job 4: Bandit Security Linting
-  # ----------------------------
   bandit:
     name: Security linting with Bandit
     runs-on: ubuntu-latest
     needs: [flake8, black, isort]
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - run: pip install bandit
+      - run: bandit -r ${{ github.workspace }}/src -ll
 
-      - name: Install Bandit
-        run: pip install bandit
-
-      - name: Run Bandit
-        run: bandit -r ${{ github.workspace }}/src  -ll
-
-  # ----------------------------
-  # Job 5: Run Pytest
-  # ----------------------------
   pytest:
     name: Run Tests with Pytest
     runs-on: ubuntu-latest
-    needs: [dvc-pull, bandit, flake8, black, isort]
+    needs: [flake8, black, isort, bandit]
     if: false
     env:
       PYTHONPATH: ${{ github.workspace }}/src
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirement.txt
+      - run: |
+          pip install -r requirements.txt
           pip install pytest
-
-      - name: Run tests
-        run: |
-          python -m pytest tests --maxfail=5 --disable-warnings -q
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      - run: python -m pytest tests --maxfail=5 --disable-warnings -q
