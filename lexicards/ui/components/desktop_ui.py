@@ -1,4 +1,4 @@
-from tkinter import Button, Canvas, Label
+from tkinter import Button, Canvas
 
 from lexicards.interfaces.ui.i_ui_base import IUiBase
 
@@ -39,17 +39,13 @@ class DesktopLexiUI(IUiBase):
     def create_title_label(self):
         """Create a title text on the canvas."""
         self._title_label = self._canvas.create_text(
-            400, 150,
-            text="",
-            font=self.LABEL_TOP_FONT,
-            fill="black"
+            400, 150, text="", font=self.LABEL_TOP_FONT, fill="black"
         )
 
     def create_word_label(self):
         """Create a word text on the canvas."""
         self._word_label = self._canvas.create_text(
-            400, 263, text="", font=self.LABEL_TOP_FONT,
-            fill="black"
+            400, 263, text="", font=self.LABEL_TOP_FONT, fill="black"
         )
 
     def build_buttons(self, wrong_image, right_image, next_image):
