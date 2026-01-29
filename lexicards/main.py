@@ -3,6 +3,7 @@ from tkinter import Tk
 
 from lexicards.controllers.data_loader import ResourceLoader
 from lexicards.controllers.data_retriever import CSVDataRetrieverFactory
+from lexicards.controllers.data_saver import CSVDataSaverFactory
 from lexicards.controllers.lexical_controller import LexicalController
 from lexicards.ui.builders.desktop_ui_builder import DesktopLexiUiBuilder
 from lexicards.ui.builders.mac_ui_builder import MacLexiUiBuilder
@@ -48,10 +49,11 @@ def main():
     # -----------------------------
     # Controller & Wiring
     # -----------------------------
-    retriever = CSVDataRetrieverFactory(
-        "data/japanese_words.csv"
-    ).create_data_retriever()
-    controller = LexicalController(ui_manager, retriever)
+
+    retriever = CSVDataRetrieverFactory()
+    saver_factory = CSVDataSaverFactory()
+
+    controller = LexicalController(ui_manager, retriever, saver_factory)
 
     orchestrator = orchestrator_class(ui)
     orchestrator.wire_callbacks(controller)
