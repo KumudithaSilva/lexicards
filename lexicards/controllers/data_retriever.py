@@ -78,6 +78,7 @@ class CSVDataRetrieverFactory(DataRetrieverFactory):
     """
     Factory for creating CSVDataRetriever instances.
     """
+
     def create_data_retriever(self, filename: str) -> IDataRetriever:
         """
         Create and return a CSVDataRetriever instance using the configured filename.
