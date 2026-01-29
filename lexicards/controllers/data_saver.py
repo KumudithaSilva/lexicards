@@ -1,5 +1,4 @@
 import csv
-import os
 from abc import ABC, abstractmethod
 
 from lexicards.errors.error import DataCorruptionError
@@ -25,7 +24,6 @@ class CSVDataSaver(IDataSaver):
             filename (str): Path to the CSV file where data will be saved.
         """
         self.filename = filename
-
 
     def save_data(self, word: str, meaning: str) -> None:
         """
