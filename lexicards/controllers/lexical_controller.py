@@ -151,4 +151,4 @@ class LexicalController(IController):
     def _load_data(self, filename: str) -> List[List[str]]:
         """Load word data from a CSV file using the configured data retriever."""
         retriever = self.csv_data.create_data_retriever(filename)
-        return  retriever.load_data()
+        return retriever.load_data()
