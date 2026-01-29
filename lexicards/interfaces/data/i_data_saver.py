@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IDataSaver(ABC):
     """Interface for saving vocabulary data (CSV, DB, API)."""
 
