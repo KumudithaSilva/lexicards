@@ -19,6 +19,9 @@ def main():
     root = Tk()
     loader = ResourceLoader()
 
+    icon_path = loader.get_resource_path("lexicards.ico")
+    root.iconbitmap(icon_path)
+
     images = {
         "card_front_image": loader.load_image("card_front.png"),
         "card_back_image": loader.load_image("card_back.png"),
