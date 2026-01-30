@@ -102,7 +102,7 @@ class LexicalController(IController):
             ValueError: If the CSV does not contain at least two columns per row.
         """
         if self.words is None:
-            self.words = self._load_data("data/known_words.csv")
+            self.words = self._load_data("data/japanese_words.csv")
 
             if not self.words or len(self.words[0]) < 2:
                 raise ValueError("CSV data must contain at least two columns per row.")
