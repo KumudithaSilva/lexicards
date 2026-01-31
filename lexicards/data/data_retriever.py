@@ -27,11 +27,12 @@ class CSVDataRetriever(IDataRetriever):
             filename (str): Path to the CSV file. Defaults to 'data/japanese_words.csv'.
         """
         if hasattr(sys, "_MEIPASS"):
-            self.filename = os.path.join(sys._MEIPASS, "assets", "data")
+            base_path = os.path.join(sys._MEIPASS, "assets", "data")
         else:
-            self.filename = os.path.join(
-                os.path.dirname(__file__), "..", "assets", "data", filename
-            )
+            base_path = os.path.join(os.path.dirname(__file__), "..", "assets", "data")
+
+        self.base_path = os.path.abspath(base_path)
+        self.filename = os.path.join(self.base_path, filename)
 
     def load_data(self) -> List[List[str]]:
         """
