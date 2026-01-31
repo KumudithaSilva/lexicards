@@ -1,9 +1,9 @@
 import random
 from typing import List, Tuple
 
+from lexicards.data.data_remover import DataRemoverFactory
 from lexicards.data.data_retriever import DataRetrieverFactory
 from lexicards.data.data_saver import DataSaverFactory
-from lexicards.data.data_remover import DataRemoverFactory
 from lexicards.interfaces.manager.i_manager import IWordManager
 
 
@@ -39,7 +39,7 @@ class WordManager(IWordManager):
         source_file: str,
         known_file: str = "known_words.csv",
         unknown_file: str = "unknown_words.csv",
-        flush_interval=5
+        flush_interval=5,
     ):
         """
         Initialize WordManager.
