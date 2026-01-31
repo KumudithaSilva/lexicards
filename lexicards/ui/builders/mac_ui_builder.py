@@ -1,4 +1,4 @@
-from lexicards.interfaces.ui.i_ui_mac_builder import IUiBuilderMac
+from lexicards.interfaces.ui.builders.i_ui_mac_builder import IUiBuilderMac
 from lexicards.ui.components.mac_ui import MacLexiUI
 
 

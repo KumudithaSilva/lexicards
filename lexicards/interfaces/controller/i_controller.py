@@ -26,8 +26,3 @@ class IController(ABC):
         """Called when the user clicks the 'Next' button.
         Moves to the next random word, regardless of known/unknown state."""
         pass
-
-    @abstractmethod
-    def generate_word_meaning(self):
-        """Generates or fetches the meaning of the currently displayed word."""
-        pass

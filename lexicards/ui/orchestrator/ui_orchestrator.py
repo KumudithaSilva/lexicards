@@ -1,4 +1,4 @@
-from lexicards.interfaces.ui.i_ui_orchestrator import IUiOrchestrator
+from lexicards.interfaces.ui.orchestrator.i_ui_orchestrator import IUiOrchestrator
 
 
 class UiOrchestrator(IUiOrchestrator):

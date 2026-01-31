@@ -1,4 +1,4 @@
-from lexicards.interfaces.ui.i_ui_director import IUiDirector
+from lexicards.interfaces.ui.director.i_ui_director import IUiDirector
 
 
 class DesktopUiDirector(IUiDirector):

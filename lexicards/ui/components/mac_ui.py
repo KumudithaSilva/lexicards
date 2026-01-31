@@ -1,6 +1,6 @@
 from tkinter import Button
 
-from lexicards.interfaces.ui.i_ui_mac import IUiMac
+from lexicards.interfaces.ui.components.i_ui_mac import IUiMac
 from lexicards.ui.builders.desktop_ui_builder import DesktopLexiUI
 
 

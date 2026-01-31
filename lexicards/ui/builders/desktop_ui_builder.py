@@ -1,4 +1,4 @@
-from lexicards.interfaces.ui.i_ui_builder import IUiBuilder
+from lexicards.interfaces.ui.builders.i_ui_builder import IUiBuilder
 from lexicards.ui.components.desktop_ui import DesktopLexiUI
 
 

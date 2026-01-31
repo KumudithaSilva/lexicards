@@ -1,10 +1,12 @@
 import platform
 from tkinter import Tk
 
-from lexicards.controllers.data_loader import ResourceLoader
-from lexicards.controllers.data_retriever import CSVDataRetrieverFactory
-from lexicards.controllers.data_saver import CSVDataSaverFactory
+from lexicards.data.data_loader import ResourceLoader
+from lexicards.data.data_remover import CSVDataRemoverFactory
+from lexicards.data.data_retriever import CSVDataRetrieverFactory
+from lexicards.data.data_saver import CSVDataSaverFactory
 from lexicards.controllers.lexical_controller import LexicalController
+from lexicards.manager.word_manager import WordManager
 from lexicards.ui.builders.desktop_ui_builder import DesktopLexiUiBuilder
 from lexicards.ui.builders.mac_ui_builder import MacLexiUiBuilder
 from lexicards.ui.director.ui_desktop_director import DesktopUiDirector
@@ -54,9 +56,14 @@ def main():
     # -----------------------------
 
     retriever = CSVDataRetrieverFactory()
-    saver_factory = CSVDataSaverFactory()
+    saver_factory = CSVDataSaverFactory(foreign_language="Japanese", native_language="English")
+    remover_factory = CSVDataRemoverFactory()
 
-    controller = LexicalController(ui_manager, retriever, saver_factory)
+    manager = WordManager(loader_factory=retriever,
+                          saver_factory=saver_factory,
+                          data_remover=remover_factory,
+                          source_file="japanese_words.csv")
+    controller = LexicalController(ui_manager, manager)
 
     orchestrator = orchestrator_class(ui)
     orchestrator.wire_callbacks(controller)
