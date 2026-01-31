@@ -68,7 +68,7 @@ class LexicalController(IController):
         """
         self._meaning_of_random_word()
         self.ui.run_after(2000, self._generate_random_word)
-        self._save_to_file(filename="data/known_words.csv")
+        # self._save_to_file(filename="data/known_words.csv")
 
     def handle_unknown_word(self) -> None:
         """
@@ -80,7 +80,7 @@ class LexicalController(IController):
         """
         self._meaning_of_random_word()
         self.ui.run_after(2000, self._generate_random_word)
-        self._save_to_file(filename="data/unknown_words.csv")
+        # self._save_to_file(filename="data/unknown_words.csv")
 
     def handle_next_word(self) -> None:
         """Handle the 'Next' button click by generating a new random word."""
@@ -102,7 +102,7 @@ class LexicalController(IController):
             ValueError: If the CSV does not contain at least two columns per row.
         """
         if self.words is None:
-            self.words = self._load_data("data/japanese_words.csv")
+            self.words = self._load_data("japanese_words.csv")
 
             if not self.words or len(self.words[0]) < 2:
                 raise ValueError("CSV data must contain at least two columns per row.")
