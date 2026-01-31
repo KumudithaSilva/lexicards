@@ -3,6 +3,7 @@ import os
 import sys
 import threading
 from abc import ABC, abstractmethod
+
 from lexicards.interfaces.data.i_data_remove import IDataRemover
 
 
@@ -34,12 +35,12 @@ class CSVDataRemover(IDataRemover):
         # ==========================================================
 
         if hasattr(sys, "_MEIPASS"):
-            self.filename = os.path.join(sys._MEIPASS, "assets", "data")
+            base_path = os.path.join(sys._MEIPASS, "assets", "data")
         else:
-            self.filename = os.path.join(
-                os.path.dirname(__file__), "..", "assets", "data", filename
-            )
+            base_path = os.path.join(os.path.dirname(__file__), "..", "assets", "data")
 
+        self.base_path = os.path.abspath(base_path)
+        self.filename = os.path.join(self.base_path, filename)
 
     def remove_word(self, word: str) -> None:
         """
@@ -65,7 +66,6 @@ class CSVDataRemover(IDataRemover):
             writer.writerow(header)
             writer.writerows(new_rows)
 
-
     def mark_for_removal(self, word: str) -> None:
         """
         Mark a word for later removal (batch deletion).
@@ -75,7 +75,6 @@ class CSVDataRemover(IDataRemover):
         """
         with self._lock:
             self.to_remove.add(word)
-
 
     def flush(self) -> None:
         """
@@ -97,10 +96,7 @@ class CSVDataRemover(IDataRemover):
             return
 
         header = rows[0]
-        new_rows = [
-            row for row in rows[1:]
-            if row and row[0] not in rows_to_remove
-        ]
+        new_rows = [row for row in rows[1:] if row and row[0] not in rows_to_remove]
         print(len(new_rows))
 
         with open(self.filename, "w", encoding="utf-8", newline="") as file:
@@ -110,13 +106,10 @@ class CSVDataRemover(IDataRemover):
 
         print("flush end")
 
-
     def flush_async(self) -> None:
         """Run flush in a background thread."""
-        threading.Thread(
-            target=self.flush,
-            daemon=True
-        ).start()
+        threading.Thread(target=self.flush, daemon=True).start()
+
 
 # --------------------------
 # Factory Interface
