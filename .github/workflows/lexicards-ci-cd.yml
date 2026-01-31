@@ -94,7 +94,7 @@ jobs:
         run: |
           pyinstaller lexicards/main.py --onefile --noconsole --name LexiCards --icon=lexicards/assets/images/lexicards-main.ico ^
             --add-data "lexicards/assets/images;assets/images" ^
-            --add-data "lexicards/data;data"
+            --add-data "lexicards/assets/data;assets/data"
 
       - name: Show dist folder contents
         run: dir dist
