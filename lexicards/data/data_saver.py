@@ -37,11 +37,12 @@ class CSVDataSaver(IDataSaver):
         # ==========================================================
 
         if hasattr(sys, "_MEIPASS"):
-            self.filename = os.path.join(sys._MEIPASS, "assets", "data")
+            base_path = os.path.join(sys._MEIPASS, "assets", "data")
         else:
-            self.filename = os.path.join(
-                os.path.dirname(__file__), "..", "assets", "data", filename
-            )
+            base_path = os.path.join(os.path.dirname(__file__), "..", "assets", "data")
+
+        self.base_path = os.path.abspath(base_path)
+        self.filename = os.path.join(self.base_path, filename)
 
         # ==========================================================
         # Load existing words to prevent duplicates
@@ -117,6 +118,7 @@ class CSVDataSaverFactory(DataSaverFactory):
     """
     Factory for creating CSVDataSaver instances.
     """
+
     def __init__(self, foreign_language: str, native_language: str):
         """
         Initialize the factory with language metadata.
