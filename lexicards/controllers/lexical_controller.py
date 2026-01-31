@@ -75,7 +75,6 @@ class LexicalController(IController):
         except ValueError:
             self.ui.update_word_display("No data loaded.")
 
-
     # ----------------------------------------------------------------------
     # Private Utility Methods
     # ----------------------------------------------------------------------
@@ -89,4 +88,3 @@ class LexicalController(IController):
         self.ui.reset_canvas()
         self.ui.update_title(self.manager.native_language)
         self.ui.update_word_display(self.current_meaning)
-
