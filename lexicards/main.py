@@ -1,6 +1,7 @@
 import platform
 from tkinter import Tk
 
+from lexicards.audio.audio_service import AudioService
 from lexicards.controllers.lexical_controller import LexicalController
 from lexicards.data.data_loader import ResourceLoader
 from lexicards.data.data_remover import CSVDataRemoverFactory
@@ -37,13 +38,13 @@ def main():
     # Platform-specific UI setup
     # -----------------------------
     if current_os == "Darwin":
-        builder = MacLexiUiBuilder(root, images)
-        director = MacUiDirector(builder)
-        orchestrator_class = MacUiOrchestrator
-    else:
         builder = DesktopLexiUiBuilder(root, images)
         director = DesktopUiDirector(builder)
         orchestrator_class = UiOrchestrator
+    else:
+        builder = MacLexiUiBuilder(root, images)
+        director = MacUiDirector(builder)
+        orchestrator_class = MacUiOrchestrator
 
     # -----------------------------
     # Construct and initialize UI
@@ -61,14 +62,29 @@ def main():
     )
     remover_factory = CSVDataRemoverFactory()
 
+    # -----------------------------
+    # WordManager
+    # -----------------------------
     manager = WordManager(
         loader_factory=retriever,
         saver_factory=saver_factory,
         data_remover=remover_factory,
         source_file="japanese_words.csv",
     )
-    controller = LexicalController(ui_manager, manager)
 
+    # -----------------------------
+    # Audio
+    # -----------------------------
+    audio = AudioService()
+
+    # -----------------------------
+    # Controller
+    # -----------------------------
+    controller = LexicalController(ui_manager, manager, audio)
+
+    # -----------------------------
+    # Orchestrator
+    # -----------------------------
     orchestrator = orchestrator_class(ui)
     orchestrator.wire_callbacks(controller)
 
@@ -76,6 +92,7 @@ def main():
     # Start app
     # -----------------------------
     root.mainloop()
+
 
 
 if __name__ == "__main__":
