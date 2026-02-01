@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from lexicards.interfaces.ui.i_ui_base import IUiBase
+from lexicards.interfaces.ui.components.i_ui_base import IUiBase
 
 
 class IUiMac(IUiBase):

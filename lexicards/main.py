@@ -1,9 +1,13 @@
 import platform
 from tkinter import Tk
 
-from lexicards.controllers.data_loader import ResourceLoader
-from lexicards.controllers.data_retriever import CSVDataRetrieverFactory
+from lexicards.audio.audio_service import AudioService
 from lexicards.controllers.lexical_controller import LexicalController
+from lexicards.data.data_loader import ResourceLoader
+from lexicards.data.data_remover import CSVDataRemoverFactory
+from lexicards.data.data_retriever import CSVDataRetrieverFactory
+from lexicards.data.data_saver import CSVDataSaverFactory
+from lexicards.manager.word_manager import WordManager
 from lexicards.ui.builders.desktop_ui_builder import DesktopLexiUiBuilder
 from lexicards.ui.builders.mac_ui_builder import MacLexiUiBuilder
 from lexicards.ui.director.ui_desktop_director import DesktopUiDirector
@@ -18,6 +22,9 @@ def main():
     root = Tk()
     loader = ResourceLoader()
 
+    icon_path = loader.get_resource_path("lexicards.ico")
+    root.iconbitmap(icon_path)
+
     images = {
         "card_front_image": loader.load_image("card_front.png"),
         "card_back_image": loader.load_image("card_back.png"),
@@ -31,13 +38,13 @@ def main():
     # Platform-specific UI setup
     # -----------------------------
     if current_os == "Darwin":
-        builder = MacLexiUiBuilder(root, images)
-        director = MacUiDirector(builder)
-        orchestrator_class = MacUiOrchestrator
-    else:
         builder = DesktopLexiUiBuilder(root, images)
         director = DesktopUiDirector(builder)
         orchestrator_class = UiOrchestrator
+    else:
+        builder = MacLexiUiBuilder(root, images)
+        director = MacUiDirector(builder)
+        orchestrator_class = MacUiOrchestrator
 
     # -----------------------------
     # Construct and initialize UI
@@ -48,11 +55,36 @@ def main():
     # -----------------------------
     # Controller & Wiring
     # -----------------------------
-    retriever = CSVDataRetrieverFactory(
-        "data/japanese_words.csv"
-    ).create_data_retriever()
-    controller = LexicalController(ui_manager, retriever)
 
+    retriever = CSVDataRetrieverFactory()
+    saver_factory = CSVDataSaverFactory(
+        foreign_language="Japanese", native_language="English"
+    )
+    remover_factory = CSVDataRemoverFactory()
+
+    # -----------------------------
+    # WordManager
+    # -----------------------------
+    manager = WordManager(
+        loader_factory=retriever,
+        saver_factory=saver_factory,
+        data_remover=remover_factory,
+        source_file="japanese_words.csv",
+    )
+
+    # -----------------------------
+    # Audio
+    # -----------------------------
+    audio = AudioService()
+
+    # -----------------------------
+    # Controller
+    # -----------------------------
+    controller = LexicalController(ui_manager, manager, audio)
+
+    # -----------------------------
+    # Orchestrator
+    # -----------------------------
     orchestrator = orchestrator_class(ui)
     orchestrator.wire_callbacks(controller)
 

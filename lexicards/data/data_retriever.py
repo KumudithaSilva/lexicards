@@ -1,5 +1,6 @@
 import csv
 import os
+import sys
 from abc import ABC, abstractmethod
 from typing import List
 
@@ -18,14 +19,20 @@ class CSVDataRetriever(IDataRetriever):
         filename (str): Path to the CSV file to load data from.
     """
 
-    def __init__(self, filename: str = "data/japanese_words.csv"):
+    def __init__(self, filename: str = "japanese_words.csv"):
         """
         Initialize the CSVDataRetriever with a filename.
 
         Args:
             filename (str): Path to the CSV file. Defaults to 'data/japanese_words.csv'.
         """
-        self.filename = filename
+        if hasattr(sys, "_MEIPASS"):
+            base_path = os.path.join(sys._MEIPASS, "assets", "data")
+        else:
+            base_path = os.path.join(os.path.dirname(__file__), "..", "assets", "data")
+
+        self.base_path = os.path.abspath(base_path)
+        self.filename = os.path.join(self.base_path, filename)
 
     def load_data(self) -> List[List[str]]:
         """
@@ -58,9 +65,12 @@ class DataRetrieverFactory(ABC):
     """
 
     @abstractmethod
-    def create_data_retriever(self) -> IDataRetriever:
+    def create_data_retriever(self, filename: str) -> IDataRetriever:
         """
         Create and return an IDataRetriever instance.
+
+        Args:
+            filename (str): Path to retrieve Data.
 
         Returns:
             IDataRetriever: Concrete implementation of data retriever.
@@ -74,25 +84,16 @@ class DataRetrieverFactory(ABC):
 class CSVDataRetrieverFactory(DataRetrieverFactory):
     """
     Factory for creating CSVDataRetriever instances.
-
-    Attributes:
-        filename (str): Path to the CSV file.
     """
 
-    def __init__(self, filename: str = "data/japanese_words.csv"):
-        """
-        Initialize the factory with a filename.
-
-        Args:
-            filename (str): Path to the CSV file to create retrievers for.
-        """
-        self.filename = filename
-
-    def create_data_retriever(self) -> IDataRetriever:
+    def create_data_retriever(self, filename: str) -> IDataRetriever:
         """
         Create and return a CSVDataRetriever instance using the configured filename.
+
+        Args:
+            filename (str): Path to retrieve CSV file.
 
         Returns:
             CSVDataRetriever: New instance of CSVDataRetriever.
         """
-        return CSVDataRetriever(self.filename)
+        return CSVDataRetriever(filename)

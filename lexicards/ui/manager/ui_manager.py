@@ -1,5 +1,5 @@
 from lexicards.core.singleton_meta import SingletonMeta
-from lexicards.interfaces.ui.i_ui_manager import IUiManager
+from lexicards.interfaces.ui.manager.i_ui_manager import IUiManager
 
 
 class UiManager(IUiManager, metaclass=SingletonMeta):

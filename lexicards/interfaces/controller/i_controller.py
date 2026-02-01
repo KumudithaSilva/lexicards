@@ -28,6 +28,6 @@ class IController(ABC):
         pass
 
     @abstractmethod
-    def generate_word_meaning(self):
-        """Generates or fetches the meaning of the currently displayed word."""
+    def handle_speak(self):
+        """Called when the user clicks the 'Speak' button."""
         pass
