@@ -6,4 +6,4 @@ class MacUiOrchestrator(UiOrchestrator):
 
     def wire_callbacks(self, controller):
         super().wire_callbacks(controller)
-        self.ui.set_audio_callback(controller.handle_next_word)
+        self.ui.set_audio_callback(controller.handle_speak)
