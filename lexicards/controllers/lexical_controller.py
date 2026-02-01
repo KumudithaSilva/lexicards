@@ -1,7 +1,7 @@
+from lexicards.interfaces.audio.i_audio_servcie import IAudioService
 from lexicards.interfaces.controller.i_controller import IController
 from lexicards.interfaces.manager.i_manager import IWordManager
 from lexicards.interfaces.ui.manager.i_ui_manager import IUiManager
-from lexicards.interfaces.audio.i_audio_servcie import IAudioService
 
 
 class LexicalController(IController):
@@ -12,12 +12,7 @@ class LexicalController(IController):
         ui (IUiManager): The UI manager instance to interact with.
     """
 
-    def __init__(
-        self,
-        ui: IUiManager,
-        manager: IWordManager,
-        audio: IAudioService
-    ):
+    def __init__(self, ui: IUiManager, manager: IWordManager, audio: IAudioService):
         """
         Initialize the LexicalController.
 

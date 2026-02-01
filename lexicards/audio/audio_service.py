@@ -1,4 +1,5 @@
 import threading
+
 import pyttsx3
 
 from lexicards.interfaces.audio.i_audio_servcie import IAudioService
@@ -11,6 +12,7 @@ class AudioService(IAudioService):
     Attributes:
         lock: Threading lock to ensure the TTS engine is used safely in multithreaded environment.
     """
+
     def __init__(self):
         """
         Initialize the TTS engine, detect available voices, and store them in a dictionary.
@@ -32,7 +34,7 @@ class AudioService(IAudioService):
             pyttsx3 engines cannot be safely reused,
             so a new engine is created per call to ensure speech always works.
         """
-        lang= lang.strip().lower().lstrip("\ufeff")[0:2]
+        lang = lang.strip().lower().lstrip("\ufeff")[0:2]
 
         with self.lock:
             engine = pyttsx3.init()
@@ -75,4 +77,3 @@ class AudioService(IAudioService):
                 return voice.id
 
         return None
-

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IAudioService(ABC):
     """
     Abstract base class for audio / text-to-speech services.
