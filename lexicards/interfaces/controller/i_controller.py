@@ -26,3 +26,8 @@ class IController(ABC):
         """Called when the user clicks the 'Next' button.
         Moves to the next random word, regardless of known/unknown state."""
         pass
+
+    @abstractmethod
+    def handle_speak(self):
+        """Called when the user clicks the 'Speak' button."""
+        pass
