@@ -1,6 +1,7 @@
 from lexicards.interfaces.controller.i_controller import IController
 from lexicards.interfaces.manager.i_manager import IWordManager
 from lexicards.interfaces.ui.manager.i_ui_manager import IUiManager
+from lexicards.interfaces.audio.i_audio_servcie import IAudioService
 
 
 class LexicalController(IController):
@@ -15,6 +16,7 @@ class LexicalController(IController):
         self,
         ui: IUiManager,
         manager: IWordManager,
+        audio: IAudioService
     ):
         """
         Initialize the LexicalController.
@@ -24,6 +26,7 @@ class LexicalController(IController):
         """
         self.ui = ui
         self.manager = manager
+        self.audio = audio
         self.current_word = None
         self.current_meaning = None
 
@@ -74,6 +77,10 @@ class LexicalController(IController):
 
         except ValueError:
             self.ui.update_word_display("No data loaded.")
+
+    def handle_speak(self):
+        """Generate text to speak."""
+        self.audio.speak_async(self.current_word, self.manager.foreign_language)
 
     # ----------------------------------------------------------------------
     # Private Utility Methods
