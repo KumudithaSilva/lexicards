@@ -90,21 +90,17 @@ class CSVDataRemover(IDataRemover):
 
         with open(self.filename, "r", encoding="utf-8", newline="") as file:
             rows = list(csv.reader(file))
-            print(len(rows))
 
         if not rows:
             return
 
         header = rows[0]
         new_rows = [row for row in rows[1:] if row and row[0] not in rows_to_remove]
-        print(len(new_rows))
 
         with open(self.filename, "w", encoding="utf-8", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(header)
             writer.writerows(new_rows)
-
-        print("flush end")
 
     def flush_async(self) -> None:
         """Run flush in a background thread."""
