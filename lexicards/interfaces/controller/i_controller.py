@@ -23,8 +23,8 @@ class IController(ABC):
 
     @abstractmethod
     def handle_next_word(self):
-        """Called when the user clicks the 'Next' button.
-        Moves to the next random word, regardless of known/unknown state."""
+        """ Called when the user clicks the 'next' button.
+        Display the next random word and show its meaning after three seconds."""
         pass
 
     @abstractmethod
