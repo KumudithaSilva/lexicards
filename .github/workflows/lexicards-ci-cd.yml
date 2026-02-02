@@ -58,21 +58,27 @@ jobs:
     name: Run Tests with Pytest
     runs-on: ubuntu-latest
     needs: [flake8, black, isort, bandit]
-    if: false
-    env:
-      PYTHONPATH: ${{ github.workspace }}/src
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       - run: |
-          pip install -r requirements.txt
           pip install pytest
-      - run: python -m pytest tests --maxfail=5 --disable-warnings -q
+
+      - name: Run Audio Tests
+        run: pytest tests/audio/test_audio_service.py
+
+      - name: Run Data Services Tests
+        run: pytest tests/data/test_data_service.py
+
+      - name: Run Manager Tests
+        run: pytest tests/manager/test_manager.py
 
   build:
     runs-on: windows-latest
+    needs: [pytest]
     steps:
       - uses: actions/checkout@v3
 
