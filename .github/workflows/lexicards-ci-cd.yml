@@ -78,6 +78,7 @@ jobs:
 
   build:
     runs-on: windows-latest
+    needs: [pytest]
     steps:
       - uses: actions/checkout@v3
 
