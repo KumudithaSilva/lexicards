@@ -40,27 +40,19 @@ class LexicalController(IController):
     def handle_known_word(self) -> None:
         """
         Handle the 'Known' button click.
-
-        Displays the meaning of the current word for 2 seconds,
-        then generates a new random word. Marks the word as known.
+        Mark the current word as known and update storage.
         """
-        self._display_meaning()
-        self.ui.run_after(2000, self.handle_next_word)
         self.manager.mark_as_known()
 
     def handle_unknown_word(self) -> None:
         """
         Handle the 'Unknown' button click.
-
-        Displays the meaning of the current word for 2 seconds,
-        then generates a new random word. Marks the word as unknown.
+        Mark the current word as unknown and update storage.
         """
-        self._display_meaning()
-        self.ui.run_after(2000, self.handle_next_word)
         self.manager.mark_as_unknown()
 
     def handle_next_word(self) -> None:
-        """Generate and display the next random word."""
+        """Display the next random word and show its meaning after three seconds."""
         try:
             word, meaning = self.manager.get_random_word()
             self.current_word = word
@@ -69,6 +61,8 @@ class LexicalController(IController):
             self.ui.update_canvas()
             self.ui.update_title(self.manager.foreign_language)
             self.ui.update_word_display(word)
+
+            self.ui.run_after(3000, self._display_meaning)
 
         except ValueError:
             self.ui.update_word_display("No data loaded.")
