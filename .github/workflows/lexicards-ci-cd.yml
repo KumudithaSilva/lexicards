@@ -76,6 +76,9 @@ jobs:
       - name: Run Manager Tests
         run: pytest tests/manager/test_manager.py
 
+      - name: Run Controller Tests
+        run: pytest tests/controller/test_controller.py
+
   build:
     runs-on: windows-latest
     needs: [pytest]
