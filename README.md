@@ -86,7 +86,7 @@ Example in LexiCard:
 | Singleton                 | ResourceLoader                                             | Single instance for resource management.                                                       |
 | Factory | DataRetrieverFactory, DataSaverFactory, DataRemoverFactory | Creates and controls the creation of data access objects (retriever, saver, remover) separately. |
 | Builder + Director        | DesktopLexiUiBuilder, DesktopUiDirector                    | Construct complex UI in steps, decoupled from controller.                                      |
-    | Orchestrator              | UiOrchestrator                                             | Connects UI events to controller actions and decouples presentation from logic.              |
+| Orchestrator              | UiOrchestrator                                             | Connects UI events to controller actions and decouples presentation from logic.              |
 
 
 ---
