@@ -6,18 +6,24 @@ from lexicards.interfaces.ui.manager.i_ui_manager import IUiManager
 
 class LexicalController(IController):
     """
-    Controller that connects the UI and random word generator.
+    Controller that connects the UI and word manager, handling user interactions.
 
     Attributes:
-        ui (IUiManager): The UI manager instance to interact with.
+        ui (IUiManager): The UI manager instance for interface updates.
+        manager (IWordManager): The word manager instance for vocabulary words manage.
+        audio (IAudioService): The audio service instance for text-to-speech.
+        current_word (str | None): The currently displayed word.
+        current_meaning (str | None): The meaning of the current word.
     """
 
     def __init__(self, ui: IUiManager, manager: IWordManager, audio: IAudioService):
         """
-        Initialize the LexicalController.
+        Initialize the LexicalController with UI, word manager, and audio service.
 
         Args:
-            ui (IUiManager): UI manager instance to handle user interface interactions.
+            ui (IUiManager): UI manager instance for interface interactions.
+            manager (IWordManager): Word manager instance for managing vocabulary words.
+            audio (IAudioService): Audio service instance for text-to-speech functionality.
         """
         self.ui = ui
         self.manager = manager
