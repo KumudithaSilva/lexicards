@@ -102,7 +102,7 @@ Example in LexiCard:
 ---
 ## 📸 LexiCard App Output (UI Preview)
 
-<img width="254" height="384" alt="image" src="" />
+<img width="500" height="384" alt="image" src="https://github.com/user-attachments/assets/9e8ac28d-f1a5-4c74-bf26-106f8a7bd629"/>
 
 ---
 ## 📌 How It Works
