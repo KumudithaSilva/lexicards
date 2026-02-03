@@ -38,13 +38,13 @@ def main():
     # Platform-specific UI setup
     # -----------------------------
     if current_os == "Darwin":
-        builder = DesktopLexiUiBuilder(root, images)
-        director = DesktopUiDirector(builder)
-        orchestrator_class = UiOrchestrator
-    else:
         builder = MacLexiUiBuilder(root, images)
         director = MacUiDirector(builder)
         orchestrator_class = MacUiOrchestrator
+    else:
+        builder = DesktopLexiUiBuilder(root, images)
+        director = DesktopUiDirector(builder)
+        orchestrator_class = UiOrchestrator
 
     # -----------------------------
     # Construct and initialize UI
